@@ -5,6 +5,7 @@ let weather = {
         if (!response.ok) {
           alert("No weather found.");
           throw new Error("No weather found.");
+          console.log("no weather");
         }
         return response.json();
       })
@@ -22,7 +23,7 @@ let weather = {
     document.querySelector(".humidity").innerText = "Humidity: " + humidity + "%";
     document.querySelector(".wind").innerText = "Wind speed: " + speed + " km/h";
     document.querySelector(".weather").classList.remove("loading");
-    document.body.style.backgroundImage ="url('https://source.unsplash.com/1600x900/?"+name+"')";
+    document.body.style.backgroundImage ="url('https://source.unsplash.com/1600x900/?"+data+"')";
   },
   search: function () {
     let text = ".search-bar";
@@ -34,58 +35,34 @@ let weather = {
 document.querySelector(".search button").addEventListener("click",function(){weather.search();});
 
 document .querySelector(".search-bar").addEventListener("keyup", function (event) {
-    if (event.key == "Enter") {
+    if (event.key === "Enter") {
       weather.search();
     }
   });
-  let countryname ="";
-
-   function fetchText(countryname){
-   fetch('https://ipinfo.io/json?token=c9caa3cad56d50') .then((response) => response.json())
-   .then((data) =>{ countryname= data.city});
-//  countryname =obj.employees[0].firstName + " " + obj.employees[0].lastName;
-  }
- //console.log( fetchText());
-//weather.fetchWeather("Aleppo");
-
-
 
 let show = {
-  apiKey: "c9caa3cad56d50",
+  apiKey: "4n1ueawop2tenevy",
   fetchWeather: function () {
-    fetch( "https://ipinfo.io/json?token=" +  this.apiKey ) .then((response) => {
+    fetch( "https://api.ipregistry.co/?key=" +  this.apiKey ) .then((response) => {
         if (!response.ok) {   
-          console.log("Empty");
-          
+          console.log("Empty"); 
         }
         return response.json();
       })
-      .then((data) => this.displayWeather(data)).then(this.displaybase());
+      .then((data) => this.displayWeather(data));
   },
   displayWeather: function (data) {
-    //const { name } = data.city;
-    
-    //console.log(data.city);
-     
-    
-    if(isEmpty(data)==false){
-     weather.fetchWeather(data.city);
-    //  console.log("not aleppo");
+  
+    if(data.location.city ==null)
+    {  
+     weather.fetchWeather("Aleppo");  
     }
-     
-  },
-  displaybase: function () {
-    weather.fetchWeather("aleppo"); 
- },
-}
-
-  function isEmpty(obj) {
-    for(var prop in obj) {
-      if(Object.prototype.hasOwnProperty.call(obj, prop)) {
-        return false;
-      }
+    else
+    {
+      weather.fetchWeather(data.location.city);
     }
-    return true;
-  }
-
+  
+  }, 
+};
+ 
   show.fetchWeather();

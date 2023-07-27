@@ -4,8 +4,8 @@ let weather = {
     fetch( "https://api.openweathermap.org/data/2.5/weather?q=" +  city +  "&units=metric&appid=" + this.apiKey ) .then((response) => {
         if (!response.ok) {
           alert("No weather found.");
-          throw new Error("No weather found.");
           console.log("no weather");
+          throw new Error("No weather found.");
         }
         return response.json();
       })
@@ -22,8 +22,8 @@ let weather = {
     fetch( "https://api.openweathermap.org/data/2.5/weather?q=" +  city +  "&units=metric&appid=" + this.apiKey ) .then((response) => {
         if (!response.ok) {
           alert("No weather found.");
-          throw new Error("No weather found.");
           console.log("no weather");
+          throw new Error("No weather found.");
         }
         return response.json();
       })
@@ -97,6 +97,7 @@ document.querySelector(".search button").addEventListener("click",function(){wea
 document .querySelector(".search-bar").addEventListener("keyup", function (event) {
     if (event.key === "enter") {
       weather.search();
+
     }
   });
 
@@ -124,5 +125,4 @@ let show = {
   
   }, 
 };
- 
-  show.fetchWeather();
+show.fetchWeather();
